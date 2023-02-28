@@ -37,7 +37,7 @@ resource "yandex_storage_bucket" "this" {
     content {
       rule {
         apply_server_side_encryption_by_default {
-          kms_master_key_id = var.server_side_encryption_kms_id
+          kms_master_key_id = var.server_side_encryption_kms_master_key_id
           sse_algorithm     = "aws:kms"
         }
       }

@@ -38,17 +38,17 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_access_key"></a> [access\_key](#input\_access\_key) | The access key to use when applying changes. If omitted, storage\_access\_key specified in provider config is used | `string` | `null` | no |
-| <a name="input_anonymous_access"></a> [anonymous\_access](#input\_anonymous\_access) | n/a | <pre>object({<br>    read = optional(bool, false),<br>    list = optional(bool, false)<br>  })</pre> | `{}` | no |
-| <a name="input_cors_rule"></a> [cors\_rule](#input\_cors\_rule) | n/a | <pre>object({<br>    allowed_headers = optional(list(string))<br>    allowed_methods = optional(list(string))<br>    allowed_origins = optional(list(string))<br>    expose_headers  = optional(list(string))<br>    max_age_seconds = optional(number)<br>  })</pre> | `null` | no |
-| <a name="input_enable_server_side_encryption"></a> [enable\_server\_side\_encryption](#input\_enable\_server\_side\_encryption) | n/a | `bool` | `false` | no |
-| <a name="input_enable_versioning"></a> [enable\_versioning](#input\_enable\_versioning) | n/a | `bool` | `false` | no |
+| <a name="input_anonymous_access"></a> [anonymous\_access](#input\_anonymous\_access) | Bucket anonymous access settings | <pre>object({<br>    read = optional(bool, false),<br>    list = optional(bool, false)<br>  })</pre> | `{}` | no |
+| <a name="input_cors_rule"></a> [cors\_rule](#input\_cors\_rule) | Bucket CORS settings | <pre>object({<br>    allowed_headers = optional(list(string))<br>    allowed_methods = optional(list(string))<br>    allowed_origins = optional(list(string))<br>    expose_headers  = optional(list(string))<br>    max_age_seconds = optional(number)<br>  })</pre> | `null` | no |
+| <a name="input_enable_server_side_encryption"></a> [enable\_server\_side\_encryption](#input\_enable\_server\_side\_encryption) | If true, server side encryption will be enabled | `bool` | `false` | no |
+| <a name="input_enable_versioning"></a> [enable\_versioning](#input\_enable\_versioning) | If true, bucket versioning will be enabled | `bool` | `false` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
 | <a name="input_force_destroy"></a> [force\_destroy](#input\_force\_destroy) | indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error | `bool` | `false` | no |
 | <a name="input_http_certificate_id"></a> [http\_certificate\_id](#input\_http\_certificate\_id) | Id of the HTTPS certificate in Certificate Manager | `string` | `null` | no |
 | <a name="input_max_size"></a> [max\_size](#input\_max\_size) | The size of bucket, in bytes (5 Gb by default). Set 0 if you do not want to limit bucket size | `number` | `5368709120` | no |
-| <a name="input_name"></a> [name](#input\_name) | Name of lockbox secret | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Bucket name | `string` | n/a | yes |
 | <a name="input_secret_key"></a> [secret\_key](#input\_secret\_key) | The secret key to use when applying changes. If omitted, storage\_secret\_key specified in provider config is used | `string` | `null` | no |
-| <a name="input_server_side_encryption_kms_id"></a> [server\_side\_encryption\_kms\_id](#input\_server\_side\_encryption\_kms\_id) | n/a | `string` | `null` | no |
+| <a name="input_server_side_encryption_kms_master_key_id"></a> [server\_side\_encryption\_kms\_master\_key\_id](#input\_server\_side\_encryption\_kms\_master\_key\_id) | The KMS master key ID used for the SSE-KMS encryption | `string` | `null` | no |
 | <a name="input_storage_class"></a> [storage\_class](#input\_storage\_class) | Bucket storage class. Can be COLD or STANDARD | `string` | `"STANDARD"` | no |
 
 ## Outputs

@@ -23,7 +23,7 @@ variable "secret_key" {
 # naming
 #
 variable "name" {
-  description = "Name of lockbox secret"
+  description = "Bucket name"
   type        = string
 }
 
@@ -49,6 +49,7 @@ variable "force_destroy" {
 }
 
 variable "cors_rule" {
+  description = "Bucket CORS settings"
   type = object({
     allowed_headers = optional(list(string))
     allowed_methods = optional(list(string))
@@ -60,21 +61,25 @@ variable "cors_rule" {
 }
 
 variable "enable_versioning" {
-  type    = bool
-  default = false
+  description = "If true, bucket versioning will be enabled"
+  type        = bool
+  default     = false
 }
 
 variable "enable_server_side_encryption" {
-  type    = bool
-  default = false
+  description = "If true, server side encryption will be enabled"
+  type        = bool
+  default     = false
 }
 
-variable "server_side_encryption_kms_id" {
-  type    = string
-  default = null
+variable "server_side_encryption_kms_master_key_id" {
+  description = "The KMS master key ID used for the SSE-KMS encryption"
+  type        = string
+  default     = null
 }
 
 variable "anonymous_access" {
+  description = "Bucket anonymous access settings"
   type = object({
     read = optional(bool, false),
     list = optional(bool, false)
