@@ -1,7 +1,3 @@
-locals {
-  sse_kms_master_key_name = var.sse_kms_key_configuration.name_prefix != null ? "${var.sse_kms_key_configuration.name_prefix}-${random_string.unique_id.result}" : null
-}
-
 resource "yandex_kms_symmetric_key" "this" {
   count               = var.server_side_encryption_configuration.enabled && var.server_side_encryption_configuration.kms_master_key_id == null ? 1 : 0
   name                = try(coalesce(var.sse_kms_key_configuration.name, local.sse_kms_master_key_name), null)

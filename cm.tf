@@ -1,7 +1,3 @@
-locals {
-  cm_certificate_name = try(var.https.certificate.name_prefix != null, false) ? "${var.https.certificate.name_prefix}-${random_string.unique_id.result}" : "s3-https-certificate-${random_string.unique_id.result}"
-}
-
 resource "yandex_cm_certificate" "this" {
   count               = try(var.https.certificate != null, false) ? 1 : 0
   name                = coalesce(var.https.certificate.name, local.cm_certificate_name)
@@ -20,7 +16,10 @@ resource "yandex_cm_certificate" "this" {
     # Then remove duplicates in the list.
     # Example: ["example.com", "example.com"] becomes ["example.com"]
     # Finally, count the number of elements in the list.
-    challenge_count = length(distinct([for domain in var.https.certificate.domains : replace(domain, "/^(\\*\\.)(.*)$/", "$2")]))
+    challenge_count = length(distinct([
+      for domain in var.https.certificate.domains :
+      replace(domain, "/^(\\*\\.)(.*)$/", "$2")
+    ]))
   }
 }
 

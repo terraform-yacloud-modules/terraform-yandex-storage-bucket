@@ -1,6 +1,10 @@
 locals {
   folder_id = coalesce(var.folder_id, data.yandex_client_config.client.folder_id)
 
+  cm_certificate_name                = try(var.https.certificate.name_prefix != null, false) ? "${var.https.certificate.name_prefix}-${random_string.unique_id.result}" : "s3-https-certificate-${random_string.unique_id.result}"
+  sse_kms_master_key_name            = var.sse_kms_key_configuration.name_prefix != null ? "${var.sse_kms_key_configuration.name_prefix}-${random_string.unique_id.result}" : null
+  storage_admin_service_account_name = var.storage_admin_service_account.name_prefix != null ? "${var.storage_admin_service_account.name_prefix}-${random_string.unique_id.result}" : "storage-admin-${random_string.unique_id.result}"
+
   routing_rules_dict = {
     condition                       = "Condition"
     redirect                        = "Redirect"
@@ -46,7 +50,8 @@ locals {
   routing_rules = try(var.website.routing_rules != null ? jsonencode([
     for rule in var.website.routing_rules : {
       for key, value in rule : lookup(local.routing_rules_dict, key, null) => {
-        for k, v in value : lookup(local.routing_rules_dict, k, null) => v if v != null
+        for k, v in value : lookup(local.routing_rules_dict, k, null) => v
+        if v != null
       } if value != null && value != {}
     }
   ]) : null, null)

@@ -6,20 +6,11 @@ terraform {
     }
 
     random = {
-      source  = "hashicorp/random"
+      source = "hashicorp/random"
     }
 
     aws = {
-      source  = "hashicorp/aws"
+      source = "hashicorp/aws"
     }
   }
-}
-
-
-resource "random_string" "unique_id" {
-  length  = 8
-  upper   = false
-  lower   = true
-  numeric = true
-  special = false
 }

@@ -1,12 +1,3 @@
-locals {
-  storage_admin_service_account_name = var.storage_admin_service_account.name_prefix != null ? "${var.storage_admin_service_account.name_prefix}-${random_string.unique_id.result}" : "storage-admin-${random_string.unique_id.result}"
-}
-
-data "yandex_iam_service_account" "existing_account" {
-  count              = var.storage_admin_service_account.existing_account_id != null ? 1 : 0
-  service_account_id = var.storage_admin_service_account.existing_account_id
-}
-
 resource "yandex_iam_service_account" "storage_admin" {
   count       = var.storage_admin_service_account.existing_account_id == null ? 1 : 0
   name        = coalesce(var.storage_admin_service_account.name, local.storage_admin_service_account_name)

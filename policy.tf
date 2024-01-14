@@ -4,16 +4,18 @@ data "aws_iam_policy_document" "this" {
   dynamic "statement" {
     for_each = var.policy.statements != null ? var.policy.statements : []
     content {
-      sid     = statement.value.sid
-      effect  = statement.value.effect
-      actions = statement.value.actions
+      sid       = statement.value.sid
+      effect    = statement.value.effect
+      actions   = statement.value.actions
       resources = [
         for v in statement.value.resources :
         can(regex("arn:aws:s3:::.*", v)) ? v : format("arn:aws:s3:::%s", v)
       ]
 
       dynamic "principals" {
-        for_each = statement.value.principal != null ? [statement.value.principal] : []
+        for_each = statement.value.principal != null ? [
+          statement.value.principal
+        ] : []
         content {
           type        = principals.value.type
           identifiers = principals.value.identifiers
@@ -21,7 +23,9 @@ data "aws_iam_policy_document" "this" {
       }
 
       dynamic "not_principals" {
-        for_each = statement.value.not_principal != null ? [statement.value.not_principal] : []
+        for_each = statement.value.not_principal != null ? [
+          statement.value.not_principal
+        ] : []
         content {
           type        = not_principals.value.type
           identifiers = not_principals.value.identifiers
@@ -29,7 +33,9 @@ data "aws_iam_policy_document" "this" {
       }
 
       dynamic "condition" {
-        for_each = statement.value.condition != null ? [statement.value.condition] : []
+        for_each = statement.value.condition != null ? [
+          statement.value.condition
+        ] : []
         content {
           test     = condition.value.type
           variable = condition.value.key
@@ -42,9 +48,9 @@ data "aws_iam_policy_document" "this" {
   dynamic "statement" {
     for_each = range(var.policy_console.enabled ? 1 : 0)
     content {
-      sid     = var.policy_console.sid
-      effect  = var.policy_console.effect
-      actions = ["*"]
+      sid       = var.policy_console.sid
+      effect    = var.policy_console.effect
+      actions   = ["*"]
       resources = [
         "arn:aws:s3:::${var.bucket_name}/*",
         "arn:aws:s3:::${var.bucket_name}"
@@ -53,7 +59,9 @@ data "aws_iam_policy_document" "this" {
       condition {
         test     = "StringLike"
         variable = "aws:referer"
-        values   = ["https://console.cloud.yandex.*/folders/*/storage/buckets/${var.bucket_name}*"]
+        values   = [
+          "https://console.cloud.yandex.*/folders/*/storage/buckets/${var.bucket_name}*"
+        ]
       }
 
       dynamic "principals" {
@@ -85,9 +93,9 @@ data "aws_iam_policy_document" "this" {
   dynamic "statement" {
     for_each = range(var.policy.enabled || var.policy_console.enabled ? 1 : 0)
     content {
-      sid     = "default-rule-for-storage-admin-service-account"
-      effect  = "Allow"
-      actions = ["*"]
+      sid       = "default-rule-for-storage-admin-service-account"
+      effect    = "Allow"
+      actions   = ["*"]
       resources = [
         "arn:aws:s3:::${var.bucket_name}/*",
         "arn:aws:s3:::${var.bucket_name}"

@@ -1,6 +1,14 @@
+resource "random_string" "unique_id" {
+  length  = 8
+  upper   = false
+  lower   = true
+  numeric = true
+  special = false
+}
+
 resource "yandex_storage_bucket" "this" {
   bucket    = var.bucket_name
-  folder_id = var.folder_id
+  folder_id = local.folder_id
 
   access_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].access_key, var.storage_admin_service_account.existing_account_access_key)
   secret_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].secret_key, var.storage_admin_service_account.existing_account_secret_key)

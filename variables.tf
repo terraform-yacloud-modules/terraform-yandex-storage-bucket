@@ -42,8 +42,6 @@ variable "tags" {
 #
 # storage options
 #
-
-
 variable "max_size" {
   description = <<EOF
     (Optional) The size of bucket, in bytes (5 Gb by default). Set 0 if you do not want to limit bucket size.
@@ -61,9 +59,6 @@ variable "force_destroy" {
   default     = false
 }
 
-#
-#
-#
 variable "storage_admin_service_account" {
   description = <<EOF
     (Optional) Allows to manage storage admin service account for the bucket.
