@@ -5,9 +5,9 @@ module "storage_buckets" {
 
   source = "../../"
 
-  name = format("testprefix-%s", each.key)
+  bucket_name = format("testprefix-%s", each.key)
 
-  storage_class     = each.value["storage_class"]
-  max_size          = each.value["max_size"]
-  enable_versioning = each.value["enable_versioning"]
+#   storage_class     = each.value["storage_class"]
+#   max_size          = each.value["max_size"]
+#   enable_versioning = each.value["enable_versioning"]
 }
