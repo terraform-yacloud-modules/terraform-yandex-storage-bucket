@@ -75,7 +75,7 @@ variable "storage_admin_service_account" {
     an access key will be automatically generated with random name, and the role of `storage.admin` will be assigned to the generated service account.
   EOF
   nullable    = false
-  type        = object({
+  type = object({
     name                        = optional(string)
     name_prefix                 = optional(string)
     description                 = optional(string, "Service account for Object storage admin.")
@@ -129,7 +129,7 @@ variable "grant" {
       permissions - (Required) List of assigned permissions.
   EOF
   nullable    = false
-  type        = list(object({
+  type = list(object({
     id          = optional(string)
     type        = string
     uri         = optional(string)
@@ -174,8 +174,8 @@ variable "policy" {
       values - (Required) List of values.
   EOF
   nullable    = false
-  type        = object({
-    enabled    = bool
+  type = object({
+    enabled = bool
     statements = optional(list(object({
       sid       = optional(string)
       effect    = optional(string)
@@ -219,7 +219,7 @@ variable "policy" {
     condition = !(anytrue([
       for k in try(coalesce(var.policy.statements, []), []) :
       k.principal == null && k.not_principal == null
-      ]))
+    ]))
     error_message = "One of \"principal\" or \"not_principal\" should be specified in every \"statement\"."
   }
 
@@ -230,7 +230,7 @@ variable "policy" {
     condition = !(anytrue([
       for k in try(coalesce(var.policy.statements, []), []) :
       k.principal != null && k.not_principal != null
-      ]))
+    ]))
     error_message = "Attributes \"principal\" and \"not_principal\" conflicts. Only one of them should be used in every \"statement\"."
   }
 
@@ -266,13 +266,13 @@ variable "policy" {
     condition = !(anytrue([
       for k in try(coalesce(var.policy.statements, []), []) :
       try(k.condition.type == "StringLike", false) &&
-    try(k.condition.key == "aws:referer", false) &&
-    try(k.condition.values != null ? anytrue([
-      for item in k.condition.values :
-      can(regex("^https?://console.cloud.yandex", item))
-    ]) : false,
+      try(k.condition.key == "aws:referer", false) &&
+      try(k.condition.values != null ? anytrue([
+        for item in k.condition.values :
+        can(regex("^https?://console.cloud.yandex", item))
+        ]) : false,
       false)
-      ]))
+    ]))
     error_message = "Policy rule for Yandex Cloud Console should be specified in \"policy_console\" variable."
   }
   default = {
@@ -311,7 +311,7 @@ variable "anonymous_access_flags" {
 
     It will try to create bucket using IAM-token in provider config, not using access_key.
   EOF
-  type        = object({
+  type = object({
     list        = optional(bool)
     read        = optional(bool)
     config_read = optional(bool)
@@ -342,9 +342,9 @@ variable "https" {
 
     It will try to create bucket using IAM-token in provider config, not using access_key.
   EOF
-  type        = object({
+  type = object({
     existing_certificate_id = optional(string)
-    certificate             = optional(object({
+    certificate = optional(object({
       domains             = set(string)
       public_dns_zone_id  = string
       dns_records_ttl     = optional(number, 300)
@@ -391,10 +391,10 @@ variable "policy_console" {
       identifiers - (Required) List of IDs.
   EOF
   nullable    = false
-  type        = object({
-    enabled   = bool
-    sid       = optional(string)
-    effect    = optional(string)
+  type = object({
+    enabled = bool
+    sid     = optional(string)
+    effect  = optional(string)
     principal = optional(object({
       type        = string
       identifiers = list(string)
@@ -438,7 +438,7 @@ variable "cors_rule" {
       max_age_seconds - (Optional) Specifies time in seconds that browser can cache the response for a preflight request.
   EOF
   nullable    = false
-  type        = list(object({
+  type = list(object({
     allowed_headers = optional(set(string))
     allowed_methods = set(string)
     allowed_origins = set(string)
@@ -448,9 +448,9 @@ variable "cors_rule" {
   validation {
     condition = alltrue([
       for k in var.cors_rule : (
-      length(setsubtract(k.allowed_methods, [
-        "GET", "PUT", "POST", "DELETE", "HEAD"
-      ])) == 0
+        length(setsubtract(k.allowed_methods, [
+          "GET", "PUT", "POST", "DELETE", "HEAD"
+        ])) == 0
       )
     ])
     error_message = "CORS \"allowed_methods\" can be GET, PUT, POST, DELETE or HEAD (case sensitive)."
@@ -487,10 +487,10 @@ variable "website" {
     The default value for index_document is used in case, when a website object is specified in the module input variables,
     but the index_document or redirect_all_requests_to are not set.
   EOF
-  type        = object({
+  type = object({
     index_document = optional(string, "index.html")
     error_document = optional(string)
-    routing_rules  = optional(list(object({
+    routing_rules = optional(list(object({
       condition = optional(object({
         key_prefix_equals               = optional(string)
         http_error_code_returned_equals = optional(string)
@@ -529,7 +529,7 @@ variable "website" {
     condition = !(anytrue([
       for k in try(coalesce(var.website.routing_rules, []), []) :
       k.redirect.replace_key_prefix_with != null && k.redirect.replace_key_with != null
-      ]))
+    ]))
     error_message = "Attributes \"replace_key_prefix_with\" and \"replace_key_with\" conflicts. Only one of them should be used in each \"redirect\" rule."
   }
 
@@ -571,7 +571,7 @@ variable "versioning" {
     Configuration attributes:
       enabled - (Required) Enable versioning.
   EOF
-  type        = object({
+  type = object({
     enabled = bool
   })
   default = null
@@ -591,9 +591,9 @@ variable "object_lock_configuration" {
       days  - (Optional) Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
       years - (Optional) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
   EOF
-  type        = object({
+  type = object({
     object_lock_enabled = optional(string, "Enabled")
-    rule                = optional(object({
+    rule = optional(object({
       default_retention = object({
         mode  = string
         days  = optional(number)
@@ -613,7 +613,7 @@ variable "logging" {
       target_bucket - (Required) The name of the bucket that will receive the log objects.
       target_prefix - (Optional) To specify a key prefix for log objects.
   EOF
-  type        = object({
+  type = object({
     target_bucket = string
     target_prefix = optional(string)
   })
@@ -655,12 +655,12 @@ variable "lifecycle_rule" {
       storage_class - (Required) Specifies the storage class to which you want the noncurrent object versions to transition. Can only be `COLD` or `STANDARD_IA`.
   EOF
   nullable    = false
-  type        = list(object({
+  type = list(object({
     enabled                                = bool
     id                                     = optional(string)
     prefix                                 = optional(string)
     abort_incomplete_multipart_upload_days = optional(number)
-    expiration                             = optional(object({
+    expiration = optional(object({
       date                         = optional(string)
       days                         = optional(number)
       expired_object_delete_marker = optional(bool)
@@ -692,7 +692,7 @@ variable "server_side_encryption_configuration" {
       kms_master_key_id - (Optional) The KMS master key ID used for the server-side encryption. Allows to specify an existing KMS key for the server-side encryption. If omitted, the KMS key will be generated with parameters in the `sse_kms_key_configuration` variable.
   EOF
   nullable    = false
-  type        = object({
+  type = object({
     enabled           = bool
     sse_algorithm     = optional(string, "aws:kms")
     kms_master_key_id = optional(string)
@@ -725,7 +725,7 @@ variable "sse_kms_key_configuration" {
       deletion_protection - (Optional) Prevents key deletion. Default value is `false`.
   EOF
   nullable    = false
-  type        = object({
+  type = object({
     name                = optional(string)
     name_prefix         = optional(string)
     description         = optional(string, "KMS key for Object storage server-side encryption.")

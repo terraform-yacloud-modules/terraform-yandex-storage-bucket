@@ -1,4 +1,11 @@
 variable "buckets" {
+  description = "Map of buckets configuration"
+  type = map(object({
+    enabled           = bool
+    storage_class     = string
+    max_size          = number
+    enable_versioning = bool
+  }))
   default = {
     "data" = {
       enabled           = true
