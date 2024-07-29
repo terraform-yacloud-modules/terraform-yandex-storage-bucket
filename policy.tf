@@ -4,9 +4,9 @@ data "aws_iam_policy_document" "this" {
   dynamic "statement" {
     for_each = var.policy.statements != null ? var.policy.statements : []
     content {
-      sid       = statement.value.sid
-      effect    = statement.value.effect
-      actions   = statement.value.actions
+      sid     = statement.value.sid
+      effect  = statement.value.effect
+      actions = statement.value.actions
       resources = [
         for v in statement.value.resources :
         can(regex("arn:aws:s3:::.*", v)) ? v : format("arn:aws:s3:::%s", v)
@@ -48,9 +48,9 @@ data "aws_iam_policy_document" "this" {
   dynamic "statement" {
     for_each = range(var.policy_console.enabled ? 1 : 0)
     content {
-      sid       = var.policy_console.sid
-      effect    = var.policy_console.effect
-      actions   = ["*"]
+      sid     = var.policy_console.sid
+      effect  = var.policy_console.effect
+      actions = ["*"]
       resources = [
         "arn:aws:s3:::${var.bucket_name}/*",
         "arn:aws:s3:::${var.bucket_name}"
@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "this" {
       condition {
         test     = "StringLike"
         variable = "aws:referer"
-        values   = [
+        values = [
           "https://console.cloud.yandex.*/folders/*/storage/buckets/${var.bucket_name}*"
         ]
       }
@@ -93,9 +93,9 @@ data "aws_iam_policy_document" "this" {
   dynamic "statement" {
     for_each = range(var.policy.enabled || var.policy_console.enabled ? 1 : 0)
     content {
-      sid       = "default-rule-for-storage-admin-service-account"
-      effect    = "Allow"
-      actions   = ["*"]
+      sid     = "default-rule-for-storage-admin-service-account"
+      effect  = "Allow"
+      actions = ["*"]
       resources = [
         "arn:aws:s3:::${var.bucket_name}/*",
         "arn:aws:s3:::${var.bucket_name}"
