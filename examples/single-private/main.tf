@@ -11,10 +11,10 @@ module "private_buckets" {
   }
 
   # Storage options
-  max_size = 5368709120  # 5 GB
-  force_destroy = false
-  acl = "private"
-  grant = []
+  max_size              = 5368709120 # 5 GB
+  force_destroy         = false
+  acl                   = "private"
+  grant                 = []
   default_storage_class = "STANDARD"
   anonymous_access_flags = {
     list        = false
