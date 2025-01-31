@@ -34,7 +34,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_buckets"></a> [buckets](#input\_buckets) | Map of buckets configuration | <pre>map(object({<br>    enabled           = bool<br>    storage_class     = string<br>    max_size          = number<br>    enable_versioning = bool<br>  }))</pre> | <pre>{<br>  "backup": {<br>    "enable_versioning": false,<br>    "enabled": true,<br>    "max_size": 5368709120,<br>    "storage_class": "COLD"<br>  },<br>  "data": {<br>    "enable_versioning": false,<br>    "enabled": true,<br>    "max_size": 5368709120,<br>    "storage_class": "STANDARD"<br>  }<br>}</pre> | no |
+| <a name="input_buckets"></a> [buckets](#input\_buckets) | Map of buckets configuration | <pre>map(object({<br/>    enabled           = bool<br/>    storage_class     = string<br/>    max_size          = number<br/>    enable_versioning = bool<br/>  }))</pre> | <pre>{<br/>  "backup": {<br/>    "enable_versioning": false,<br/>    "enabled": true,<br/>    "max_size": 5368709120,<br/>    "storage_class": "COLD"<br/>  },<br/>  "data": {<br/>    "enable_versioning": false,<br/>    "enabled": true,<br/>    "max_size": 5368709120,<br/>    "storage_class": "STANDARD"<br/>  }<br/>}</pre> | no |
 
 ## Outputs
 
