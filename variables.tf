@@ -338,7 +338,7 @@ variable "https" {
       name_prefix         - (Optional) Prefix of the certificate name. A unique certificate name will be generated using the prefix. Default value is `s3-https-certificate`. Conflicts with `name`.
       description         - (Optional) Certificate description.
       labels              - (Optional) Labels to assign to certificate.
-      deletion_protection - (Optional) Prevents certificate deletion. Default value is `false`.
+      deletion_protection - (Optional) Prevents certificate deletion. Be aware that if the value is `true`, you will have to manually turn off deletion protection before removing the resource.
 
     It will try to create bucket using IAM-token in provider config, not using access_key.
   EOF
@@ -352,7 +352,7 @@ variable "https" {
       name_prefix         = optional(string)
       description         = optional(string, "Certificate for S3 static website.")
       labels              = optional(map(string))
-      deletion_protection = optional(bool, false)
+      deletion_protection = optional(bool, true)
     }))
   })
   validation {
