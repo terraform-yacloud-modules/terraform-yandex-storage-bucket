@@ -726,6 +726,7 @@ variable "sse_kms_key_configuration" {
   EOF
   nullable    = false
   type = object({
+    create_kms          = optional(bool, false)
     name                = optional(string)
     name_prefix         = optional(string)
     description         = optional(string, "KMS key for Object storage server-side encryption.")
