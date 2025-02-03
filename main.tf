@@ -126,7 +126,7 @@ resource "yandex_storage_bucket" "this" {
   }
 
   dynamic "server_side_encryption_configuration" {
-    for_each = range(var.server_side_encryption_configuration.enabled ? 1 : 0)
+    for_each = range(var.sse_kms_key_configuration.create_kms && var.server_side_encryption_configuration.enabled ? 1 : 0)
     content {
       rule {
         apply_server_side_encryption_by_default {
