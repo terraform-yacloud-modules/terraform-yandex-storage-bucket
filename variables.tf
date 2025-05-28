@@ -722,7 +722,7 @@ variable "sse_kms_key_configuration" {
       description         - (Optional) Description of the key.
       default_algorithm   - (Optional) Encryption algorithm to be used with a new key version, generated with the next rotation. Default value is `AES_256`.
       rotation_period     - (Optional) Interval between automatic rotations. To disable automatic rotation, omit this parameter. Default value is `8760h` (1 year).
-      deletion_protection - (Optional) Prevents key deletion. Default value is `false`.
+      deletion_protection - (Optional) Prevents key deletion. Default value is `true`.
   EOF
   nullable    = false
   type = object({
@@ -732,7 +732,7 @@ variable "sse_kms_key_configuration" {
     description         = optional(string, "KMS key for Object storage server-side encryption.")
     default_algorithm   = optional(string, "AES_256")
     rotation_period     = optional(string, "8760h")
-    deletion_protection = optional(bool, false)
+    deletion_protection = optional(bool, true)
   })
   validation {
     condition     = !(var.sse_kms_key_configuration.name != null && var.sse_kms_key_configuration.name_prefix != null)
