@@ -87,7 +87,7 @@ resource "yandex_storage_bucket" "this" {
     content {
       enabled                                = lifecycle_rule.value.enabled
       id                                     = lifecycle_rule.value.id
-      prefix                                 = lifecycle_rule.value.prefix
+      prefix                                 = lifecycle_rule.value.prefix # Deprecated
       abort_incomplete_multipart_upload_days = lifecycle_rule.value.abort_incomplete_multipart_upload_days
 
       dynamic "expiration" {
