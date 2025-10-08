@@ -25,6 +25,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_iam_accounts"></a> [iam\_accounts](#module\_iam\_accounts) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-iam.git//modules/iam-account | v1.0.0 |
 | <a name="module_storage_buckets"></a> [storage\_buckets](#module\_storage\_buckets) | ../../ | n/a |
 
 ## Resources

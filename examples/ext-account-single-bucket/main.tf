@@ -18,7 +18,7 @@ module "storage_buckets" {
     existing_account_access_key = module.iam_accounts.sak_access_key
     existing_account_secret_key = module.iam_accounts.sak_secret_key
   }
-  
+
   depends_on = [
     module.iam_accounts,
   ]
