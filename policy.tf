@@ -113,7 +113,7 @@ data "aws_iam_policy_document" "this" {
         for_each = range(var.storage_admin_service_account.existing_account_id == null ? 1 : 0)
         content {
           type        = "CanonicalUser"
-          identifiers = [yandex_iam_service_account.storage_admin[0].id]
+          identifiers = [yandex_iam_service_account.storage_admin["create"].id]
         }
       }
     }

@@ -9,8 +9,11 @@ resource "yandex_kms_symmetric_key" "this" {
 }
 
 resource "yandex_resourcemanager_folder_iam_member" "kms_storage_admin_sa" {
-  count     = var.sse_kms_key_configuration.create_kms && var.server_side_encryption_configuration.enabled && var.storage_admin_service_account.existing_account_id == null ? 1 : 0
+  for_each = var.sse_kms_key_configuration.create_kms && var.server_side_encryption_configuration.enabled && var.storage_admin_service_account.existing_account_id == null ? {
+    create = true
+  } : {}
+
   folder_id = local.folder_id
   role      = "kms.keys.encrypterDecrypter"
-  member    = "serviceAccount:${yandex_iam_service_account.storage_admin[0].id}"
+  member    = "serviceAccount:${yandex_iam_service_account.storage_admin["create"].id}"
 }

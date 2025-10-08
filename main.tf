@@ -10,8 +10,8 @@ resource "yandex_storage_bucket" "this" {
   bucket    = var.bucket_name
   folder_id = local.folder_id
 
-  access_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].access_key, var.storage_admin_service_account.existing_account_access_key)
-  secret_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].secret_key, var.storage_admin_service_account.existing_account_secret_key)
+  access_key = try(yandex_iam_service_account_static_access_key.storage_admin["create"].access_key, var.storage_admin_service_account.existing_account_access_key)
+  secret_key = try(yandex_iam_service_account_static_access_key.storage_admin["create"].secret_key, var.storage_admin_service_account.existing_account_secret_key)
 
   force_destroy = var.force_destroy
   acl           = var.acl
