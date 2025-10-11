@@ -6,6 +6,8 @@ module "storage_buckets" {
   source = "../../"
 
   bucket_name = format("my-unique-bucket-name-%s", each.key)
+  
+  storage_roles = ["storage.admin", "storage.viewer"]
 
   #   storage_class     = each.value["storage_class"]
   #   max_size          = each.value["max_size"]
