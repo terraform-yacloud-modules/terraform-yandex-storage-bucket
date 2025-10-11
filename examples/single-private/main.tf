@@ -4,6 +4,8 @@ module "private_buckets" {
   # Naming
   bucket_name = "my-unique-private-bucket-name"
 
+  storage_roles = ["storage.admin", "storage.viewer"]
+
   # Tags
   tags = {
     environment = "production"

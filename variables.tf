@@ -106,6 +106,12 @@ variable "storage_admin_service_account" {
   default = {}
 }
 
+variable "storage_roles" {
+  description = "Список ролей, которые будут назначены сервисному аккаунту для управления хранилищем"
+  type        = list(string)
+  default     = ["storage.admin"]
+}
+
 variable "acl" {
   description = <<EOF
     (Optional) The predefined ACL to apply. Defaults to `private`. Conflicts with `grant` object.

@@ -4,6 +4,7 @@ module "private_buckets" {
   bucket_name = "your-unique-bucket-name-kms"
 
   acl = "private"
+  storage_roles = ["storage.admin", "storage.viewer"]
 
   server_side_encryption_configuration = {
     enabled       = true
