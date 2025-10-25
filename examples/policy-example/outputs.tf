@@ -1,0 +1,1 @@
+# Empty outputs file for standard module structure
