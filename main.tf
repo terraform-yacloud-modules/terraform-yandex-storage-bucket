@@ -175,3 +175,40 @@ resource "yandex_storage_bucket" "this" {
     yandex_resourcemanager_folder_iam_member.storage_admin
   ]
 }
+
+# Create bucket policy using the new recommended approach
+resource "yandex_storage_bucket_policy" "this" {
+  count = var.policy.enabled || var.policy_console.enabled ? 1 : 0
+
+  bucket = yandex_storage_bucket.this.bucket
+
+  access_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].access_key, var.storage_admin_service_account.existing_account_access_key)
+  secret_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].secret_key, var.storage_admin_service_account.existing_account_secret_key)
+
+  policy = data.aws_iam_policy_document.this[0].json
+
+  depends_on = [
+    yandex_storage_bucket.this,
+    data.aws_iam_policy_document.this[0]
+  ]
+}
+
+# Create bucket grants using the new recommended approach
+resource "yandex_storage_bucket_grant" "this" {
+  count = length(var.grant) > 0 ? 1 : 0
+
+  bucket = yandex_storage_bucket.this.bucket
+
+  access_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].access_key, var.storage_admin_service_account.existing_account_access_key)
+  secret_key = try(yandex_iam_service_account_static_access_key.storage_admin[0].secret_key, var.storage_admin_service_account.existing_account_secret_key)
+
+  dynamic "grant" {
+    for_each = var.grant
+    content {
+      id          = grant.value.id
+      type        = grant.value.type
+      uri         = grant.value.uri
+      permissions = grant.value.permissions
+    }
+  }
+}
