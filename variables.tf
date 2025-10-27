@@ -114,9 +114,11 @@ variable "storage_roles" {
 
 variable "acl" {
   description = <<EOF
-    (Optional) The predefined ACL to apply. Defaults to `private`. Conflicts with `grant` object.
+    (Optional) [DEPRECATED] The predefined ACL to apply. Defaults to `private`. Conflicts with `grant` object.
     To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
     For more information see https://cloud.yandex.com/en/docs/storage/concepts/acl#predefined-acls.
+    
+    WARNING: This parameter is deprecated. Use `grant` object with `yandex_storage_bucket_grant` instead.
   EOF
   type        = string
   default     = null
@@ -146,9 +148,10 @@ variable "grant" {
 
 variable "policy" {
   description = <<EOF
-    (Optional) Object storage policy.
+    (Optional) [DEPRECATED] Object storage policy.
     For more information see https://cloud.yandex.com/en/docs/storage/concepts/policy.
 
+    WARNING: This parameter is deprecated. Use `yandex_storage_bucket_policy` resource instead.
     NOTE: Bucket policy for Yandex Cloud Console is defined in a separate `policy_console` variable.
 
     Configuration attributes:

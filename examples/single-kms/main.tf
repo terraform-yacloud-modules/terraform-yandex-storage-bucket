@@ -1,10 +1,15 @@
+terraform {
+  required_version = ">= 1.0"
+}
+
 module "private_buckets" {
   source = "../../"
 
   bucket_name = "your-unique-bucket-name-kms"
 
-  acl = "private"
+  # acl = "private"  # DEPRECATED: Use grant instead
   storage_roles = ["storage.admin", "storage.viewer"]
+  grant         = []
 
   server_side_encryption_configuration = {
     enabled       = true

@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.0"
+    }
+  }
+}
+
 # Перенос provider "aws" внуть модуля делает его несовместимым с использованием count, for_each или depends_on при вызове этого модуля.
 
 provider "aws" {
