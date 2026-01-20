@@ -24,4 +24,5 @@ module "wrapper" {
   lifecycle_rule                       = try(each.value.lifecycle_rule, var.defaults.lifecycle_rule, [])
   server_side_encryption_configuration = try(each.value.server_side_encryption_configuration, var.defaults.server_side_encryption_configuration, { enabled = false })
   sse_kms_key_configuration            = try(each.value.sse_kms_key_configuration, var.defaults.sse_kms_key_configuration, {})
+  storage_roles                        = try(each.value.storage_roles, var.defaults.storage_roles, ["storage.admin"])
 }
