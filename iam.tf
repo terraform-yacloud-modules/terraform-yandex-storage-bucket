@@ -12,9 +12,9 @@ resource "yandex_iam_service_account_static_access_key" "storage_admin" {
 }
 
 resource "yandex_resourcemanager_folder_iam_member" "storage_admin" {
-  count     = var.storage_admin_service_account.existing_account_id == null ? 1 : 0
+  count     = var.storage_admin_service_account.existing_account_id == null ? length(var.storage_roles) : 0
   folder_id = local.folder_id
-  role      = "storage.admin"
+  role      = var.storage_roles[count.index]
   member    = "serviceAccount:${yandex_iam_service_account.storage_admin[0].id}"
 
   depends_on = [yandex_iam_service_account_static_access_key.storage_admin]

@@ -106,11 +106,19 @@ variable "storage_admin_service_account" {
   default = {}
 }
 
+variable "storage_roles" {
+  description = "Список ролей, которые будут назначены сервисному аккаунту для управления хранилищем"
+  type        = list(string)
+  default     = ["storage.admin"]
+}
+
 variable "acl" {
   description = <<EOF
-    (Optional) The predefined ACL to apply. Defaults to `private`. Conflicts with `grant` object.
+    (Optional) [DEPRECATED] The predefined ACL to apply. Defaults to `private`. Conflicts with `grant` object.
     To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
     For more information see https://cloud.yandex.com/en/docs/storage/concepts/acl#predefined-acls.
+    
+    WARNING: This parameter is deprecated. Use `grant` object with `yandex_storage_bucket_grant` instead.
   EOF
   type        = string
   default     = null
@@ -140,9 +148,10 @@ variable "grant" {
 
 variable "policy" {
   description = <<EOF
-    (Optional) Object storage policy.
+    (Optional) [DEPRECATED] Object storage policy.
     For more information see https://cloud.yandex.com/en/docs/storage/concepts/policy.
 
+    WARNING: This parameter is deprecated. Use `yandex_storage_bucket_policy` resource instead.
     NOTE: Bucket policy for Yandex Cloud Console is defined in a separate `policy_console` variable.
 
     Configuration attributes:
@@ -722,7 +731,7 @@ variable "sse_kms_key_configuration" {
       description         - (Optional) Description of the key.
       default_algorithm   - (Optional) Encryption algorithm to be used with a new key version, generated with the next rotation. Default value is `AES_256`.
       rotation_period     - (Optional) Interval between automatic rotations. To disable automatic rotation, omit this parameter. Default value is `8760h` (1 year).
-      deletion_protection - (Optional) Prevents key deletion. Default value is `false`.
+      deletion_protection - (Optional) Prevents key deletion. Default value is `true`.
   EOF
   nullable    = false
   type = object({
@@ -732,7 +741,7 @@ variable "sse_kms_key_configuration" {
     description         = optional(string, "KMS key for Object storage server-side encryption.")
     default_algorithm   = optional(string, "AES_256")
     rotation_period     = optional(string, "8760h")
-    deletion_protection = optional(bool, false)
+    deletion_protection = optional(bool, true)
   })
   validation {
     condition     = !(var.sse_kms_key_configuration.name != null && var.sse_kms_key_configuration.name_prefix != null)
