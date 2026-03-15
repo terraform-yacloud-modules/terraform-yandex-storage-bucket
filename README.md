@@ -21,7 +21,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.100.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.1.0 |
 | <a name="requirement_yandex"></a> [yandex](#requirement\_yandex) | >= 0.72.0 |
 
@@ -29,7 +29,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.100.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.35.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | >= 3.1.0 |
 | <a name="provider_yandex"></a> [yandex](#provider\_yandex) | >= 0.72.0 |
 
