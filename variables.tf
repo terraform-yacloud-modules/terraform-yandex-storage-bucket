@@ -126,9 +126,9 @@ variable "acl" {
 
 variable "grant" {
   description = <<EOF
-    (Optional) List of objects for an ACL policy grant. Conflicts with `acl` variable.
-    To manage grant argument, service account with `storage.admin` role should be used.
-    For more information see https://cloud.yandex.com/en/docs/storage/concepts/acl#permissions-types.
+    (Optional) List of objects for an ACL policy grant. Managed via `yandex_storage_bucket_grant` resource.
+    Conflicts with `acl` variable. Service account with `storage.admin` role is required.
+    See https://yandex.cloud/ru/docs/terraform/resources/storage_bucket_grant and https://cloud.yandex.com/en/docs/storage/concepts/acl#permissions-types.
 
     Configuration attributes:
       id          - (Optional) Permission recipient ID.
@@ -148,10 +148,10 @@ variable "grant" {
 
 variable "policy" {
   description = <<EOF
-    (Optional) [DEPRECATED] Object storage policy.
-    For more information see https://cloud.yandex.com/en/docs/storage/concepts/policy.
+    (Optional) [DEPRECATED] Object storage policy. Managed via `yandex_storage_bucket_policy` resource.
+    See https://yandex.cloud/ru/docs/terraform/resources/storage_bucket_policy and https://cloud.yandex.com/en/docs/storage/concepts/policy.
 
-    WARNING: This parameter is deprecated. Use `yandex_storage_bucket_policy` resource instead.
+    WARNING: Do not set policy on the bucket directly; the module uses `yandex_storage_bucket_policy` instead.
     NOTE: Bucket policy for Yandex Cloud Console is defined in a separate `policy_console` variable.
 
     Configuration attributes:

@@ -16,17 +16,7 @@ resource "yandex_storage_bucket" "this" {
   force_destroy = var.force_destroy
   acl           = var.acl
 
-  dynamic "grant" {
-    for_each = var.grant
-    content {
-      id          = grant.value.id
-      type        = grant.value.type
-      uri         = grant.value.uri
-      permissions = grant.value.permissions
-    }
-  }
-
-  policy = try(data.aws_iam_policy_document.this[0].json, null)
+  # Policy and grant are managed by yandex_storage_bucket_policy and yandex_storage_bucket_grant (recommended by docs).
 
   dynamic "cors_rule" {
     for_each = var.cors_rule
