@@ -198,11 +198,11 @@ variable "policy" {
         type        = string
         identifiers = list(string)
       }))
-      condition = optional(object({
+      condition = optional(list(object({
         type   = string
         key    = string
         values = list(any)
-      }))
+      })))
     })))
   })
   validation {

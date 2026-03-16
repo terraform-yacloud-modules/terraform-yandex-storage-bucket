@@ -1,0 +1,1 @@
+# Empty variables file for standard module structure
